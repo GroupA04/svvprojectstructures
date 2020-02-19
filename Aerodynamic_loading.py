@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from scipy import integrate
 
 #variables
 
@@ -47,6 +48,27 @@ for i in range(N_x + 1 + 1):
 
 #univariate polynomial interpolation scheme
 
-A = np.linalg.solve(np.vander((-1*zcoordinates),N_z),(-1*zcoordinates))
-print(A)
+vander = np.vander((-1*zcoordinates),N_z)
+a = np.linalg.solve(vander,aerodata[:,0])
+b = np.dot(np.linalg.inv(vander),aerodata[:,0])
+print(b)
 
+# print(np.dot(vander,a))
+# print(aerodata[:,0])
+#
+# print(np.allclose(np.dot(vander,a),aerodata[:,0]))
+
+n = np.array([])
+for i in range(N_z):
+    int_n = 1/(N_z-1+1 - i)
+    n = np.append(n,int_n)
+
+A_int = b*n
+
+x_int = np.array([])
+for i in range(N_z):
+    int_x = C_a**(N_z -1 +1 - i)
+    x_int = np.append(x_int, int_x)
+
+f_z_int = sum(A_int*x_int)
+print(f_z_int)
