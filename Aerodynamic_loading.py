@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
 #variables
 
@@ -43,4 +42,4 @@ ax.plot_surface(xcoordinates, zcoordinates, aerodata)
 ax.set_xlabel('Spanwise axis [m]')
 ax.set_ylabel('Chordwise axis [m]')
 ax.set_zlabel('Aerodynamic loading [kN/m2]')
-plt.show() 
+plt.show()
