@@ -35,7 +35,6 @@ for i in range(N_x + 1 + 1):
 
 xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
 
-
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
