@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
 #variables
 
@@ -30,16 +31,22 @@ for i in range(N_x + 1 + 1):
     if i <N_x +1:
         xcoordinates[i-1] = x_i
 
-#plotting for graphical representation
+# #plotting for graphical representation
+#
+# xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
+#
+#
+# fig = plt.figure()
+# ax = fig.gca(projection='3d')
+#
+# ax.plot_surface(xcoordinates, zcoordinates, aerodata)
+# ax.set_xlabel('Spanwise axis [m]')
+# ax.set_ylabel('Chordwise axis [m]')
+# ax.set_zlabel('Aerodynamic loading [kN/m2]')
+# plt.show()
 
-xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
+#univariate polynomial interpolation scheme
 
+A = np.linalg.solve(np.vander((-1*zcoordinates),N_z),(-1*zcoordinates))
+print(A)
 
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-
-ax.plot_surface(xcoordinates, zcoordinates, aerodata)
-ax.set_xlabel('Spanwise axis [m]')
-ax.set_ylabel('Chordwise axis [m]')
-ax.set_zlabel('Aerodynamic loading [kN/m2]')
-plt.show()
