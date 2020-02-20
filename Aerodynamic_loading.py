@@ -1,9 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
-from scipy import integrate
+from numerical_functions import *
 
 #variables
+from svvprojectstructures.numerical_functions import interpolate
 
 N_z = 81 #sections z axis (rows)
 N_x = 41 #sections x axis (columns)
@@ -48,14 +49,14 @@ for i in range(N_x + 1 + 1):
 
 
 
-def q_disc(zcoordinates, aerodata):
+def q_disc(z):
 
     #trapezoidal integration chord wise
     q_x = np.array([])
     for j in range(N_x):
         q_z = np.array([])
         for i in range(N_z-1):
-            s_i = (zcoordinates[i+1] - zcoordinates[i]) * (aerodata[i+1,j] - aerodata[i,j])/2
+            s_i = (z[i+1] - z[i]) * (aerodata[i+1,j] - aerodata[i,j])/2
             q_z = np.append(q_z,s_i)
 
         q_x = np.append(q_x,sum(q_z))
@@ -63,16 +64,7 @@ def q_disc(zcoordinates, aerodata):
     return q_x
 
 
-def spline(x,f):
-    n = len(x)
-    sp_start = []
-    sp_slope = []
 
-    for i in range(n):
-        sp_start = np.append(sp_start, f[i])
-        slope = (f[i+1] - f[i])/(x[i+1] - x[i])
-        sp_slope = np.append(sp_slope, slope)
+print(q_disc(zcoordinates)[6])
 
-    return sp_start, sp_slope
-
-print(q_disc(zcoordinates, aerodata))
+print(interpolate(xcoordinates, q_disc(zcoordinates), 1))
