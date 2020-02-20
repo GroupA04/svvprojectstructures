@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 from scipy import integrate
 
-<<<<<<< HEAD
 #variables
 
 N_z = 81 #sections z axis (rows)
@@ -47,35 +46,8 @@ for i in range(N_x + 1 + 1):
 # ax.set_zlabel('Aerodynamic loading [kN/m2]')
 # plt.show()
 
-#univariate polynomial interpolation scheme
 
 
-#=======
-vander = np.vander((-1*zcoordinates),N_z)
-a = np.linalg.solve(vander,aerodata[:,0])
-b = np.dot(np.linalg.inv(vander),aerodata[:,0])
-print(b)
-
-# print(np.dot(vander,a))
-# print(aerodata[:,0])
-#
-# print(np.allclose(np.dot(vander,a),aerodata[:,0]))
-
-n = np.array([])
-for i in range(N_z):
-    int_n = 1/(N_z-1+1 - i)
-    n = np.append(n,int_n)
-
-A_int = b*n
-
-x_int = np.array([])
-for i in range(N_z):
-    int_x = C_a**(N_z -1 +1 - i)
-    x_int = np.append(x_int, int_x)
-
-f_z_int = sum(A_int*x_int)
-print(f_z_int)
-=======
 def q(x):
 
     #variables
@@ -107,42 +79,8 @@ def q(x):
         if i <N_x +1:
             xcoordinates[i-1] = x_i
 
-    # #plotting for graphical representation
-    #
-    # xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
-    #
-    #
-    # fig = plt.figure()
-    # ax = fig.gca(projection='3d')
-    #
-    # ax.plot_surface(xcoordinates, zcoordinates, aerodata)
-    # ax.set_xlabel('Spanwise axis [m]')
-    # ax.set_ylabel('Chordwise axis [m]')
-    # ax.set_zlabel('Aerodynamic loading [kN/m2]')
-    # plt.show()
 
-    # #univariate polynomial interpolation scheme
-    #
-    # vander = np.vander((-1*zcoordinates),N_z)
-    # a = np.linalg.solve(vander,aerodata[:,0])
-    # b = np.dot(np.linalg.inv(vander),aerodata[:,0])
-    #
-    # n = np.array([])
-    # for i in range(N_z):
-    #     int_n = 1/(N_z-1+1 - i)
-    #     n = np.append(n,int_n)
-    #
-    # A_int = b*n
-    #
-    # x_int = np.array([])
-    # for i in range(N_z):
-    #     int_x = C_a**(N_z -1 +1 - i)
-    #     x_int = np.append(x_int, int_x)
-    #
-    # f_z_int = sum(A_int*x_int)
-    # print(f_z_int)
-
-    #trapezoidal integration
+    #trapezoidal integration chord wise
 
 
     q_x = np.array([])
@@ -154,20 +92,17 @@ def q(x):
 
         q_x = np.append(q_x,sum(q_z))
 
-    vander = np.vander(xcoordinates, N_x)
-    a_eq = np.linalg.solve(vander,q_x)
+    #linear spline for span wise interpolation
 
-    x_eq = np.array([])
     for i in range(N_x):
-        x_eq_i = x**(N_x - i)
-        x_eq = np.append(x_eq,x_eq_i)
+        if ((x >= xcoordinates[i-1]).any() and (x < xcoordinates[i]).any()):
+            q = (xcoordinates[i] - x)/(xcoordinates[i] - xcoordinates[i-1])*q_x[i-1] + (x - xcoordinates[i-1])/(xcoordinates[i] - xcoordinates[i-1])*q_x[i]
 
-    q = sum(a_eq*x_eq)
-    plt.plot(q_x)
-    plt.show()
     return q
 
 
 
->>>>>>> dc7385ca0db900b01ee1a70e41a5053e2391958d
-
+x = np.arange(0,1.5,0.05)
+print(q(x))
+plt.plot(x,q(x))
+plt.show()
