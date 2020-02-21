@@ -11,7 +11,7 @@ N_x = 41 #sections x axis (columns)
 C_a = 0.505 #chord length aileron in [m]
 l_a = 1.611 #span aileron in [m]
 
-#start code ----------------------------------------------------------------------------------------------------------------
+#start code =============================================================================================================
 #import data
 aerodata = np.genfromtxt('aerodynamicloadf100.dat', delimiter=',')  #aerodynamic loading data given
 
@@ -30,7 +30,7 @@ def q_disc(z): #discrete aerodynamic loading function over the span with input t
     return q_x
 
 
-#calculate the x and z coordinate mesh
+#calculate the x and z coordinate mesh ===========================================================================
 
 zcoordinates = np.zeros([N_z])
 xcoordinates = np.zeros([N_x])
@@ -50,7 +50,7 @@ for i in range(N_x + 1 + 1):
     if i <N_x +1:
         xcoordinates[i-1] = x_i
 
-# #plotting for graphical representation
+# #plotting for graphical representation ============================================================================
 
 # xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
 #
@@ -65,11 +65,11 @@ for i in range(N_x + 1 + 1):
 # plt.show()
 
 
-
+#interpolation and integration of aerodynamic loading =========================================================
 #split up aerodynamic loading into n sections
 
 x_list = []
-q_list = []
+q_list = [] #value of q for every section
 n_sec = 10
 for i in range(n_sec+1):
     x = l_a / n_sec * i
@@ -82,5 +82,4 @@ plt.xlabel('Span [m]')
 plt.ylabel('Aerodynamic load [kN/m]')
 plt.show()
 
-print(integration(xcoordinates, 0, 1.611, q_disc(zcoordinates), 100))
 

@@ -12,7 +12,7 @@ def spline(x, f): #sets up a linear spline model with inputs x coordinates and f
         sp_st = np.append(sp_st, f[i])
         slope = (f[i + 1] - f[i]) / (x[i + 1] - x[i])
         sp_sl = np.append(sp_sl, slope)
-    #outputs are the starting points and slope of every spline 
+    #outputs are the starting points and slope of every spline
     return sp_st, sp_sl
 
 
