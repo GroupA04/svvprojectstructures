@@ -19,15 +19,21 @@ def q_disc(z): #discrete aerodynamic loading function over the span with input t
 
     #trapezoidal integration chord wise
     q_x = np.array([])
+    z_cp = np.array([])
     for j in range(N_x):
         q_z = np.array([])
+        z_cp_j = np.array([])
+
         for i in range(N_z-1):
             s_i = (z[i] - z[i+1]) * ((aerodata[i+1,j] - aerodata[i,j])/2 + aerodata[i,j])
             q_z = np.append(q_z,s_i)
+            z_cp_i = (q_z[i] * z[i])
+            z_cp_j = np.append(z_cp_j,z_cp_i)
 
         q_x = np.append(q_x,sum(q_z))
-
-    return q_x
+        z_cp = np.append(z_cp, sum(z_cp_j)/sum(q_z))
+# outputs q_x, the distribution of aerodynamic load along span in [kN/m], z_cp, location of center of pressure per cross section
+    return q_x, z_cp
 
 
 #calculate the x and z coordinate mesh ===========================================================================
@@ -66,15 +72,18 @@ for i in range(N_x + 1 + 1):
 
 
 #interpolation and integration of aerodynamic loading =========================================================
+
+q_x, z_cp = q_disc(zcoordinates)
+
 #split up aerodynamic loading into n sections
 
 x_list = []
 q_list = [] #value of q for every section
-n_sec = 10
+n_sec = 15
 for i in range(n_sec+1):
     x = l_a / n_sec * i
     x_list = np.append(x_list, x)
-    q_list = np.append(q_list, interpolate(xcoordinates,q_disc(zcoordinates),x))
+    q_list = np.append(q_list, interpolate(xcoordinates,q_x,x))
 
 plt.plot(x_list,q_list)
 plt.title('q(x)')
