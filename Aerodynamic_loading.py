@@ -15,6 +15,23 @@ l_a = 1.611 #span aileron in [m]
 #import data
 aerodata = np.genfromtxt('aerodynamicloadf100.dat', delimiter=',')  #aerodynamic loading data given
 
+def q_disc(z): #discrete aerodynamic loading function over the span
+
+    #trapezoidal integration chord wise
+    q_x = np.array([])
+    for j in range(N_x):
+        q_z = np.array([])
+        for i in range(N_z-1):
+            s_i = (z[i+1] - z[i]) * (aerodata[i+1,j] - aerodata[i,j])/2
+            q_z = np.append(q_z,s_i)
+
+        q_x = np.append(q_x,sum(q_z))
+
+    return q_x
+
+
+#calculate the x and z coordinate mesh
+
 zcoordinates = np.zeros([N_z])
 xcoordinates = np.zeros([N_x])
 
@@ -49,22 +66,18 @@ for i in range(N_x + 1 + 1):
 
 
 
-def q_disc(z):
-
-    #trapezoidal integration chord wise
-    q_x = np.array([])
-    for j in range(N_x):
-        q_z = np.array([])
-        for i in range(N_z-1):
-            s_i = (z[i+1] - z[i]) * (aerodata[i+1,j] - aerodata[i,j])/2
-            q_z = np.append(q_z,s_i)
-
-        q_x = np.append(q_x,sum(q_z))
-
-    return q_x
 
 
+#split up aerodynamic loading into n sections
 
-print(q_disc(zcoordinates)[6])
+x_list = []
+q_list = []
+n_sec = 1611
+for i in range(n_sec+1):
+    x = l_a / n_sec * i
+    #x = (l_a - 2 * (l_a / 100)) / n_sec * i
+    x_list = np.append(x_list, x)
+    q_list = np.append(q_list, interpolate(xcoordinates,q_disc(zcoordinates),x))
 
-print(interpolate(xcoordinates, q_disc(zcoordinates), 1))
+plt.plot(x_list,q_list)
+plt.show()
