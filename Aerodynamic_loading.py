@@ -77,6 +77,7 @@ for i in range(n_sec+1):
     q_list = np.append(q_list, interpolate(xcoordinates,q_disc(zcoordinates),x))
 
 plt.plot(x_list,q_list)
+plt.title('q(x)')
 plt.xlabel('Span [m]')
 plt.ylabel('Aerodynamic load [kN/m]')
 plt.show()
