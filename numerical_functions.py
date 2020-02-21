@@ -3,7 +3,7 @@ import numpy as np
 #numerical function definitions
 
 
-def spline(x, f):
+def spline(x, f): #sets up a linear spline model
     n = len(x)
     sp_st = []
     sp_sl = []
@@ -16,7 +16,7 @@ def spline(x, f):
     return sp_st, sp_sl
 
 
-def interpolate(x, f, x_t):
+def interpolate(x, f, x_t): #linear spline interpolation scheme with x_t as the target value
     n = len(x)
     sp_st, sp_sl = spline(x, f)
     left_p = n - 2
@@ -32,3 +32,4 @@ def interpolate(x, f, x_t):
     return y
 
 
+# def integration(x_start,x_end,f,n):
