@@ -32,4 +32,16 @@ def interpolate(x, f, x_t): #linear spline interpolation scheme with x_t as the 
     return y
 
 
-# def integration(x_start,x_end,f,n):
+def integration(x, x_start,x_end,f,n):
+    s = []
+    x_int = []
+    f_int = []
+    for i in range(1,n+1):
+        x_i = (x_end-x_start)/n * i
+        x_int = np.append(x_int,x_i)
+        f_int = np.append(f_int, interpolate(x, f, x_i))
+    for i in range(n-1):
+        s_i = (x_int[i+1] - x_int[i]) * ((f_int[i+1] - f_int[i])/2 + f_int[i])
+        s = np.append(s, s_i)
+
+    return s, sum(s)

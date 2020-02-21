@@ -22,7 +22,7 @@ def q_disc(z): #discrete aerodynamic loading function over the span with input t
     for j in range(N_x):
         q_z = np.array([])
         for i in range(N_z-1):
-            s_i = (z[i+1] - z[i]) * (aerodata[i+1,j] - aerodata[i,j])/2
+            s_i = (z[i] - z[i+1]) * ((aerodata[i+1,j] - aerodata[i,j])/2 + aerodata[i,j])
             q_z = np.append(q_z,s_i)
 
         q_x = np.append(q_x,sum(q_z))
@@ -70,10 +70,9 @@ for i in range(N_x + 1 + 1):
 
 x_list = []
 q_list = []
-n_sec = 100
+n_sec = 10
 for i in range(n_sec+1):
     x = l_a / n_sec * i
-    #x = (l_a - 2 * (l_a / 100)) / n_sec * i
     x_list = np.append(x_list, x)
     q_list = np.append(q_list, interpolate(xcoordinates,q_disc(zcoordinates),x))
 
@@ -81,3 +80,6 @@ plt.plot(x_list,q_list)
 plt.xlabel('Span [m]')
 plt.ylabel('Aerodynamic load [kN/m]')
 plt.show()
+
+print(integration(xcoordinates, 0, 1.611, q_disc(zcoordinates), 100))
+
