@@ -4,7 +4,7 @@ from mpl_toolkits.mplot3d import Axes3D
 from numerical_functions import *
 
 #variables
-from svvprojectstructures.numerical_functions import interpolate
+
 
 N_z = 81 #sections z axis (rows)
 N_x = 41 #sections x axis (columns)
@@ -35,7 +35,7 @@ def q_disc(z): #discrete aerodynamic loading function over the span with input t
 # outputs q_x, the distribution of aerodynamic load along span in [kN/m], z_cp, location of center of pressure per cross section
     return q_x, z_cp
 
-
+#test
 #calculate the x and z coordinate mesh ===========================================================================
 
 zcoordinates = np.zeros([N_z])
