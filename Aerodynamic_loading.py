@@ -77,7 +77,7 @@ q_x, z_cp = q_disc(zcoordinates)
 
 #split up aerodynamic loading into n sections
 x_list = []
-n_sec = 15
+n_sec = 150
 
 #list of q values for n sections with plot
 q_list = [] #value of q for every section
@@ -87,21 +87,23 @@ for i in range(n_sec+1):
     x_list = np.append(x_list, x)
     q_list = np.append(q_list, interpolate(xcoordinates,q_x,x))
 
+plt.subplot(131)
 plt.plot(x_list,q_list)
 plt.title('q(x)')
 plt.xlabel('Span [m]')
 plt.ylabel('Aerodynamic load [kN/m]')
-plt.show()
+# plt.show()
 
 #list of center of pressure locations for n sections with plot
 z_cp_list = [] #value of q for every section
 
-for i in range(n_sec+1):
+for i in range(1,n_sec+2):
     x = l_a / n_sec * i
     z_cp_list = np.append(z_cp_list, interpolate(xcoordinates,z_cp,x))
 
+plt.subplot(133)
 plt.plot(x_list,z_cp_list)
 plt.title('z_cp(x)')
 plt.xlabel('Span [m]')
-plt.ylabel('Center of Pressure location')
+plt.ylabel('Center of Pressure location on chord [m]')
 plt.show()
