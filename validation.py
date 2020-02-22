@@ -5,6 +5,7 @@ from mpl_toolkits.mplot3d import Axes3D
 #get node locations from data file
 
 nodes = np.genfromtxt('nodes.txt', delimiter = ',')
+print(len(nodes))
 
 x_loc = nodes[:,1]
 y_loc = nodes[:,2]
