@@ -92,10 +92,10 @@ plt.plot(x_list,q_list)
 plt.title('q(x)')
 plt.xlabel('Span [m]')
 plt.ylabel('Aerodynamic load [kN/m]')
-# plt.show()
+
 
 #list of center of pressure locations for n sections with plot
-z_cp_list = [] #value of q for every section
+z_cp_list = [] #location of center of pressure on the chord for every section
 
 for i in range(1,n_sec+2):
     x = l_a / n_sec * i
@@ -106,4 +106,5 @@ plt.plot(x_list,z_cp_list)
 plt.title('z_cp(x)')
 plt.xlabel('Span [m]')
 plt.ylabel('Center of Pressure location on chord [m]')
-plt.show()
+# plt.show()
+

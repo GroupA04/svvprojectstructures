@@ -44,13 +44,15 @@ def integration(x, x_start,x_end,f,n): #integration using trapezoidial rule usin
         s_i = (x_int[i+1] - x_int[i]) * ((f_int[i+1] - f_int[i])/2 + f_int[i])
         s = np.append(s, s_i)
 
-    s_cum = [s[0]]
+    s_acum = [s[0]]
     for i in range(1, len(s)):
         print(i)
-        s_cum_i = s[i] + s_cum[i-1]
-        s_cum = np.append(s_cum, s_cum_i)
+        s_acum_i = s[i] + s_acum[i-1]
+        s_acum = np.append(s_acum, s_acum_i)
+
+    s_out = sum(s)
     #outputs are the cumulitative area distribution and the total sum of the area under the curve
-    return s_cum, sum(s)
+    return s, s_acum, s_out
 
 def average(case):
     case_ave = np.array([])
