@@ -16,21 +16,20 @@ z_loc = nodes[:,3]
 
 element_nodes = np.delete(elements, 0, 1)
 
-for i in range(len(node_num)+1):
-    element_nodes = np.where(element_nodes == i, [i], element_nodes )
-    element_nodes = np.where(element_nodes == i, [x_loc[i], y_loc[i], z_loc[i]], element_nodes)
+# for i in range(len(node_num)):
+#     element_nodes = np.where(element_nodes == i+1, [x_loc[i], y_loc[i], z_loc[i]], element_nodes)
 
 print(element_nodes)
 
 
-# fig = plt.figure()
-# ax = fig.gca(projection='3d')
-#
-# ax.scatter(x_loc, y_loc, z_loc)
-# ax.set_xlabel('Spanwise axis')
-# ax.set_ylabel('height axis')
-# ax.set_zlabel('chordwise axis')
-# plt.show()
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+
+ax.scatter(x_loc, y_loc, z_loc)
+ax.set_xlabel('Spanwise axis')
+ax.set_ylabel('height axis')
+ax.set_zlabel('chordwise axis')
+plt.show()
 
 #import data files from B737.rpt
 bending_section1 = np.array(np.genfromtxt('bending_section1.txt'))
