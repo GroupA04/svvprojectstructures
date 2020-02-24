@@ -2,6 +2,7 @@ from math import *
 import numpy as np
 from Aerodynamic_loading import xcoordinates, zcoordinates, q_disc
 from numerical_functions import interpolate, integration
+import matplotlib.pyplot as plt
 
 N_x = 41                                         # Number of points in span-wise direction (x-direction) --> should be 100?
 
@@ -48,4 +49,13 @@ def cumintegration(N_x , q, x):
 
 s1, int_1, s_out1 = integration(xcoordinates, 0, 1.611, q_x, 10)
 
+int1 = cumintegration(len(q_x),q_x, xcoordinates)
+int2 = cumintegration(len(int1), int1, xcoordinates)
+int3 = cumintegration(len(int2), int2, xcoordinates)
+int4 = cumintegration(len(int3), int3, xcoordinates)
 
+plt.plot(xcoordinates, int1)
+plt.plot(xcoordinates, int2)
+plt.plot(xcoordinates, int3)
+plt.plot(xcoordinates, int4)
+plt.show()
