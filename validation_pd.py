@@ -60,19 +60,23 @@ bending_section1ave = np.transpose(average(bending_section1))
 bending_section2ave = np.transpose(average(bending_section2))
 
 #sorted average stresses by element number
-jambendingskin_ave = np.sort(np.transpose(average(jambendingskin)), axis=0)
-jamstraightskin_ave = np.sort(np.transpose(average(jamstraightskin)), axis=0)
+jambendingskin_ave = np.transpose(average(jambendingskin))[np.transpose(average(jambendingskin))[:,0].argsort()]
+jamstraightskin_ave = np.transpose(average(jamstraightskin))[np.transpose(average(jamstraightskin))[:,0].argsort()]
 
-bending_ave =np.sort(np.concatenate((bending_section1ave, bending_section2ave)), axis= 0) #combined sections into 1 array
+bending_ave =np.concatenate((bending_section1ave, bending_section2ave))[np.concatenate((bending_section1ave, bending_section2ave))[:,0].argsort()] #combined sections into 1 array
 
 
 #=======================================================Plotting==================================================================================
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-scatter = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,1], cmap = 'hsv')
+scatter = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = bending_ave[:,1], cmap = 'coolwarm')
 
 fig.colorbar(scatter)
+
+ax.set_xlim3d(0,2500)
+ax.set_ylim3d(-1250,1250)
+ax.set_zlim3d(-1250,1250)
 
 ax.set_xlabel('Spanwise axis [mm]')
 ax.set_ylabel('Height axis [mm]')

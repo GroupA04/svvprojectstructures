@@ -55,7 +55,7 @@ for i in range(N_x + 1 + 1):
         xcoordinates[i-1] = x_i
 
 # #plotting for graphical representation ============================================================================
-
+#
 # xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
 #
 #

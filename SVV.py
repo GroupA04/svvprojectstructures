@@ -5,6 +5,7 @@ from numerical_functions import interpolate, integration
 import matplotlib.pyplot as plt
 
 N_x = 41                                         # Number of points in span-wise direction (x-direction) --> should be 100?
+z_h = - 16.1/2
 
 q_x, z_cp = q_disc(zcoordinates)                       # This contains the values of q at each point along the span
 # s_acum, s_out = integration(xcoordinates, 0, 1.611, q_x, 100)
@@ -39,7 +40,7 @@ def integralb(N_x, q, x, z_cp):
     xcoordinates = x  # This will contain all the xcoordinates of our "processed" / "non-raw" data
     individ_integrals = []  # This will have the areas of all the little individual "bars" (will have one less value than N_x)
     for i in range(N_x - 1):  # Minus 1 because we calculate area between i and i+1, so final point is not used
-        qcpi = q[i] * (z_cp[i])
+        qcpi = q[i] * (z_cp[i] - z_h)
         qcpi1 = q[i+1] * (z_cp[i+1])
         s_i = (xcoordinates[i + 1] - xcoordinates[i]) * ((qcpi1 - qcpi) / 2 + qcpi)  # Calculates individual area
 
@@ -61,15 +62,14 @@ def integralb(N_x, q, x, z_cp):
 
 # We will have to explain in the report that each time that we integrate we "lose" a point and this introduces a small error
 # Taking more points in the x direction will reduce this error since the percentage of points "lost" goes down
-# cumintegration(N_x, q_x, xcoordinates)
 
-s1, int_1, s_out1 = integration(xcoordinates, 0, 1.611, q_x, 10)
-
+#cumulatitive areas integrals
 int1 = cumintegration(len(q_x),q_x, xcoordinates)
 int2 = cumintegration(len(int1), int1, xcoordinates)
 int3 = cumintegration(len(int2), int2, xcoordinates)
 int4 = cumintegration(len(int3), int3, xcoordinates)
 
+#final values integrals
 fv_1 = int1[-1]
 fv_2 = int2[-1]
 fv_3 = int3[-1]
@@ -80,13 +80,30 @@ print("final integral values = ",fv_1,fv_2,fv_3,fv_4)
 
 int1value = interpolate(xcoordinates, int1, 0)
 
+#integral B (torque)
 intb = integralb(len(q_x), q_x, xcoordinates, z_cp)
-print(intb)
-print(q_x[0])
-print(z_cp[0])
+
+intb2 = cumintegration(len(intb), intb, xcoordinates)
+intb3 = cumintegration(len(intb2), intb2, xcoordinates)
+
+intb3_x1 = interpolate(xcoordinates, intb3, 0.125)
+intb3_x2 = interpolate(xcoordinates, intb3, 0.498)
+intb3_x3 = interpolate(xcoordinates, intb3, 1.494)
+
+fv_intb = intb[-1]
+
+print(intb3_x1,intb3_x2,intb3_x3, fv_intb)
+
+#integral 4
+int4_x1 = interpolate(xcoordinates, int4, 0.125)
+int4_x2 = interpolate(xcoordinates, int4, 0.498)
+int4_x3 = interpolate(xcoordinates, int4, 1.494)
+print(int4_x1,int4_x2,int4_x3)
+
 
 plt.plot(xcoordinates, int1)
 plt.plot(xcoordinates, int2)
 plt.plot(xcoordinates, int3)
 plt.plot(xcoordinates, int4)
+plt.plot(xcoordinates, intb)
 plt.show()
