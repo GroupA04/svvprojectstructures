@@ -4,9 +4,9 @@ from numerical_functions import *
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+
+
 #get node locations and elements from data files
-
-
 
 nodes = pd.read_csv('nodes.txt', delimiter=',',
                     names = ['node_id', 'x', 'y', 'z'],
@@ -16,34 +16,62 @@ elements = pd.read_csv('Elements', delimiter=',',
                        index_col = 0)
 
 # Check dataframes
-print(nodes.head())
-print(elements.head())
+# print(nodes.head())
+# print(elements.head())
 
 # Couple
 node_defs = ['node1','node2','node3','node4']
 a = [np.array(nodes.loc[elements.loc[nr, node_defs]]) for nr in elements.index]
 
-# Check shape
-print(np.array(a).shape)
+# Verify if shape is (6634,4,3)
+if np.array(a).shape == (6634,4,3):
+    print('Shape is correct')
+else:
+    print('Shape is incorrect')
+    print('Shape is', np.array(a).shape, 'Shape should be (6634,4,3)')
+
 
 # Access element number 5
-print(a[4])
+# print(a[4])
 
+#take average posistion of nodes to get element point
+elements_ave = []
+for i in range(len(a)):
+    elements_ave_i = np.mean(a[i], axis = 0)
+    elements_ave.append(elements_ave_i)
+elements_ave = np.array(elements_ave)
+
+#verify if averages are correct
+# print(a[1])
+# print(elements_ave[1,:])
 
 #import data files from B737.rpt
 bending_section1 = np.array(np.genfromtxt('bending_section1.txt'))
 bending_section2 = np.array(np.genfromtxt('bending_section2.txt'))
+
+jambendingskin = np.array(np.genfromtxt('jambendingskin'))
+jamstraightskin = np.array(np.genfromtxt('jamstraightskin'))
 
 #average von Mises stress and shear stress
 
 bending_section1ave = np.transpose(average(bending_section1))
 bending_section2ave = np.transpose(average(bending_section2))
 
-# index_lst = np.array([])
-# for i in range(len(elements)):
-#     index = np.where(bending_section1ave[:,0] == i)
-#     print(index[0])
-#     if index[0] > 0:
-#         index_lst = np.vstack([i, index])
-# print(index_lst)
+jambendingskin_ave = np.sort(np.transpose(average(jambendingskin)), axis=0)
+jamstraightskin_ave = np.sort(np.transpose(average(jamstraightskin)), axis=0)
+
+bending_ave =np.sort(np.concatenate((bending_section1ave, bending_section2ave)), axis= 0) #combined sections into 1 array
+
+
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+
+scatter = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = bending_ave[:,1])
+
+fig.colorbar(scatter)
+
+ax.set_xlabel('Spanwise axis [m]')
+ax.set_ylabel('Height axis [m]')
+ax.set_zlabel('Chordwise axis')
+plt.show()
 
