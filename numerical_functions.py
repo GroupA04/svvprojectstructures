@@ -46,7 +46,6 @@ def integration(x, x_start,x_end,f,n): #integration using trapezoidial rule usin
 
     s_acum = [s[0]]
     for i in range(1, len(s)):
-        print(i)
         s_acum_i = s[i] + s_acum[i-1]
         s_acum = np.append(s_acum, s_acum_i)
 

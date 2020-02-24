@@ -58,17 +58,17 @@ for i in range(N_x + 1 + 1):
 
 # #plotting for graphical representation ============================================================================
 
-xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
-
-
-fig = plt.figure()
-ax = fig.gca(projection='3d')
-
-ax.plot_surface(xcoordinates, zcoordinates, aerodata)
-ax.set_xlabel('Spanwise axis [m]')
-ax.set_ylabel('Chordwise axis [m]')
-ax.set_zlabel('Aerodynamic loading [kN/m2]')
-plt.show()
+# xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
+#
+#
+# fig = plt.figure()
+# ax = fig.gca(projection='3d')
+#
+# ax.plot_surface(xcoordinates, zcoordinates, aerodata)
+# ax.set_xlabel('Spanwise axis [m]')
+# ax.set_ylabel('Chordwise axis [m]')
+# ax.set_zlabel('Aerodynamic loading [kN/m2]')
+# plt.show()
 
 
 #interpolation and integration of aerodynamic loading =========================================================
@@ -77,7 +77,7 @@ q_x, z_cp = q_disc(zcoordinates)
 
 #split up aerodynamic loading into n sections
 x_list = []
-n_sec = 150
+n_sec = 1000
 
 #list of q values for n sections with plot
 q_list = [] #value of q for every section

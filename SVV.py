@@ -44,4 +44,8 @@ def cumintegration(N_x , q, x):
     return integral1
 # We will have to explain in the report that each time that we integrate we "lose" a point and this introduces a small error
 # Taking more points in the x direction will reduce this error since the percentage of points "lost" goes down
-cumintegration(N_x, q_x, xcoordinates)
+# cumintegration(N_x, q_x, xcoordinates)
+
+s1, int_1, s_out1 = integration(xcoordinates, 0, 1.611, q_x, 10)
+
+
