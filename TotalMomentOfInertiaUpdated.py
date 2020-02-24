@@ -19,25 +19,6 @@ d_3 = 0.01245 # [m]
 theta = 30 # [degrees]
 P = 49200  # [Newton]
 
-'''
-C_a = 0.605  # m
-l_a = 2.661  # m
-x_1 = 0.172  # m
-x_2 = 1.211  # m
-x_3 = 2.591  # m
-x_a = 0.35   # m
-h = 0.205  # m
-t_sk = 1.1/1000  # m
-t_sp = 2.8/1000  # m
-t_st = 1.2/1000  # m
-h_st = 16./1000   # m
-w_st = 19./1000   # m
-n_st = 15  # -
-d_1 = 0.01154  # m
-d_3 = 0.01840  # m
-#theta = radians(28)  # rad
-P = 97.4*1000  # N
-'''
 #Moment of Inertia calculation
 
 import numpy as np

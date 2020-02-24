@@ -106,4 +106,3 @@ plt.xlabel('Span [m]')
 plt.ylabel('Center of Pressure location on chord [m]')
 plt.show()
 
-#hoi chris
