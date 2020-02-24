@@ -65,14 +65,22 @@ jamstraightskin_ave = np.transpose(average(jamstraightskin))[np.transpose(averag
 
 bending_ave =np.concatenate((bending_section1ave, bending_section2ave))[np.concatenate((bending_section1ave, bending_section2ave))[:,0].argsort()] #combined sections into 1 array
 
+#==================================================Deflection data===================================================================================
+deflection_case1 = np.array(np.genfromtxt('Deflection1')) #bending case
+deflection_case2 = np.array(np.genfromtxt('Deflection2')) #jammed bending case
+deflection_case3 = np.array(np.genfromtxt('Deflection3')) #jammed straight case
+
+
 
 #=======================================================Plotting==================================================================================
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-scatter = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = bending_ave[:,1], cmap = 'coolwarm')
+vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,1], cmap = 'coolwarm')
+shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
+#deflection = ax.scatter(elements_ave[:,0] + deflection_case1[:,2], elements_ave[:,1], elements_ave[:,2], c = deflection_case1[:,1], cmap = 'coolwarm')
 
-fig.colorbar(scatter)
+fig.colorbar(shear)
 
 ax.set_xlim3d(0,2500)
 ax.set_ylim3d(-1250,1250)
