@@ -16,8 +16,6 @@ l_a = 1.611 #span aileron in [m]
 aerodata = np.genfromtxt('aerodynamicloadf100.dat', delimiter=',')  #aerodynamic loading data given
 
 def q_disc(z): #discrete aerodynamic loading function over the span with input the discrete aerodynamic loading over the chord
-
-    #trapezoidal integration chord wise
     q_x = np.array([])
     z_cp = np.array([])
     for j in range(N_x):
@@ -25,7 +23,7 @@ def q_disc(z): #discrete aerodynamic loading function over the span with input t
         z_cp_j = np.array([])
 
         for i in range(N_z-1):
-            s_i = (z[i] - z[i+1]) * ((aerodata[i+1,j] - aerodata[i,j])/2 + aerodata[i,j])
+            s_i = (z[i] - z[i+1]) * ((aerodata[i+1,j] - aerodata[i,j])/2 + aerodata[i,j]) #trapezoidal integration chord wise
             q_z = np.append(q_z,s_i)
             z_cp_i = (q_z[i] * z[i])
             z_cp_j = np.append(z_cp_j,z_cp_i)
