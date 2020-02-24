@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 
-
+#=========================================Import node and element data==========================================================================
 #get node locations and elements from data files
 
 nodes = pd.read_csv('nodes.txt', delimiter=',',
@@ -19,7 +19,7 @@ elements = pd.read_csv('Elements', delimiter=',',
 # print(nodes.head())
 # print(elements.head())
 
-# Couple
+# Couple node and element data
 node_defs = ['node1','node2','node3','node4']
 a = [np.array(nodes.loc[elements.loc[nr, node_defs]]) for nr in elements.index]
 
@@ -34,7 +34,7 @@ else:
 # Access element number 5
 # print(a[4])
 
-#take average posistion of nodes to get element point
+#take average posistion of nodes to get elements as point location
 elements_ave = []
 for i in range(len(a)):
     elements_ave_i = np.mean(a[i], axis = 0)
@@ -45,7 +45,9 @@ elements_ave = np.array(elements_ave)
 # print(a[1])
 # print(elements_ave[1,:])
 
-#import data files from B737.rpt
+#===============================================Import FEM data files from B737.rpt=================================================================
+
+#==============================================Von Mises stress and shear stress calculations=======================================================
 bending_section1 = np.array(np.genfromtxt('bending_section1.txt'))
 bending_section2 = np.array(np.genfromtxt('bending_section2.txt'))
 
@@ -57,21 +59,23 @@ jamstraightskin = np.array(np.genfromtxt('jamstraightskin'))
 bending_section1ave = np.transpose(average(bending_section1))
 bending_section2ave = np.transpose(average(bending_section2))
 
+#sorted average stresses by element number
 jambendingskin_ave = np.sort(np.transpose(average(jambendingskin)), axis=0)
 jamstraightskin_ave = np.sort(np.transpose(average(jamstraightskin)), axis=0)
 
 bending_ave =np.sort(np.concatenate((bending_section1ave, bending_section2ave)), axis= 0) #combined sections into 1 array
 
 
+#=======================================================Plotting==================================================================================
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-scatter = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = bending_ave[:,1])
+scatter = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,1], cmap = 'hsv')
 
 fig.colorbar(scatter)
 
-ax.set_xlabel('Spanwise axis [m]')
-ax.set_ylabel('Height axis [m]')
-ax.set_zlabel('Chordwise axis')
+ax.set_xlabel('Spanwise axis [mm]')
+ax.set_ylabel('Height axis [mm]')
+ax.set_zlabel('Chordwise axis [mm]')
 plt.show()
 
