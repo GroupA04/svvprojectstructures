@@ -64,7 +64,7 @@ def integralb(N_x, q, x, z_cp):
 # Taking more points in the x direction will reduce this error since the percentage of points "lost" goes down
 
 #cumulatitive areas integrals
-int1 = cumintegration(len(q_x),q_x, xcoordinates)
+int1 = cumintegration(len(q_x), q_x, xcoordinates)
 int2 = cumintegration(len(int1), int1, xcoordinates)
 int3 = cumintegration(len(int2), int2, xcoordinates)
 int4 = cumintegration(len(int3), int3, xcoordinates)
@@ -78,13 +78,14 @@ print("final integral values = ",fv_1,fv_2,fv_3,fv_4)
 
 
 
-int1value = interpolate(xcoordinates, int1, 0)
+int1value = interpolate(xcoordinates, int1, 100)
 
 #integral B (torque)
 intb = integralb(len(q_x), q_x, xcoordinates, z_cp)
 
 intb2 = cumintegration(len(intb), intb, xcoordinates)
 intb3 = cumintegration(len(intb2), intb2, xcoordinates)
+
 
 intb3_x1 = interpolate(xcoordinates, intb3, 0.125)
 intb3_x2 = interpolate(xcoordinates, intb3, 0.498)

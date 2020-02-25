@@ -56,15 +56,15 @@ for i in range(N_x + 1 + 1):
     if i <N_x +1:
         xcoordinates[i-1] = x_i
 
-# #plotting for graphical representation ============================================================================
-#
-xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
+# plotting for graphical representation ============================================================================
+
+x,z = np.meshgrid(xcoordinates,zcoordinates)
 
 
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
-ax.plot_surface(xcoordinates, zcoordinates, aerodata)
+ax.plot_surface(x, z, aerodata)
 ax.set_xlabel('Spanwise axis [m]')
 ax.set_ylabel('Chordwise axis [m]')
 ax.set_zlabel('Aerodynamic loading [kN/m2]')
