@@ -111,25 +111,37 @@ for i in hinge_nodes_index:
     hinge_def2 = np.vstack([nodes[i, 0] + deflection_case2[i, 2], nodes[i, 1] + deflection_case2[i, 3], nodes[i, 2] + deflection_case2[i, 4]])
     hinge_def3 = np.vstack([nodes[i, 0] + deflection_case3[i, 2], nodes[i, 1] + deflection_case3[i, 3], nodes[i, 2] + deflection_case3[i, 4]])
 
+#Deflection over hinge line for all load cases
 hinge_def1 = hinge_def1.transpose()
 hinge_def2 = hinge_def2.transpose()
 hinge_def3 = hinge_def3.transpose()
 
-#=======================================================Plotting==================================================================================
+#Maximum deflection over hinge line for all load cases
+hinge_def1_max = [hinge_def1[np.argmax(abs(hinge_def1[:,0])),0], hinge_def1[np.argmax(abs(hinge_def1[:,1])),1], hinge_def1[np.argmax(abs(hinge_def1[:,2])),2]]
+hinge_def2_max = [hinge_def2[np.argmax(abs(hinge_def2[:,0])),0], hinge_def2[np.argmax(abs(hinge_def2[:,1])),1], hinge_def2[np.argmax(abs(hinge_def2[:,2])),2]]
+hinge_def3_max = [hinge_def3[np.argmax(abs(hinge_def3[:,0])),0], hinge_def3[np.argmax(abs(hinge_def3[:,1])),1], hinge_def3[np.argmax(abs(hinge_def3[:,2])),2]]
+
+
+#=========================================================Plotting==================================================================================
 fig = plt.figure()
 ax = fig.gca(projection='3d')
 
 #------------------------------------Select which data to plot-------------------------------------------------------
+
 #vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,1], cmap = 'coolwarm')
-# shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
-deflection = ax.scatter(x2, y2, z2, c = deflection_case2[:,1], cmap = 'coolwarm')
+shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
+#deflection = ax.scatter(x2, y2, z2, c = deflection_case2[:,1], cmap = 'coolwarm')
+
 #-------------------------------------------------------------------------------------------------------------------
+
 # hingeline = ax.scatter(hinge_line[:,0], hinge_line[:,1], hinge_line[:,2])
 # hingedef1 = ax.scatter(hinge_def1[:,0], hinge_def1[:,1], hinge_def1[:,2])
 hingedef2 = ax.scatter(hinge_def2[:,0], hinge_def2[:,1], hinge_def2[:,2])
 # hingedef3 = ax.scatter(hinge_def3[:,0], hinge_def3[:,1], hinge_def3[:,2])
 
-fig.colorbar(deflection)
+#------------------------------------------------------------------------------------------------------------------
+
+fig.colorbar(shear)
 
 ax.set_xlim3d(0,2500)
 ax.set_ylim3d(-1250,1250)
@@ -138,9 +150,6 @@ ax.set_zlim3d(-1250,1250)
 ax.set_xlabel('Spanwise axis [mm]')
 ax.set_ylabel('Height axis [mm]')
 ax.set_zlabel('Chordwise axis [mm]')
-
-
-
 
 
 plt.show()
