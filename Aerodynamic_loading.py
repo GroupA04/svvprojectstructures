@@ -85,6 +85,7 @@ for i in range(n_sec+1):
     x_list = np.append(x_list, x)
     q_list = np.append(q_list, interpolate(xcoordinates,q_x,x))
 
+
 plt.subplot(131)
 plt.plot(x_list,q_list)
 plt.title('q(x)')

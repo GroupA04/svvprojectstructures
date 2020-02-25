@@ -28,6 +28,7 @@ def interpolate(x, f, x_t): #linear spline interpolation scheme with x_t as the 
             y = sp_st[x[0]] + sp_sl[x[0]]*(x_t - x[0])
         else:
             y = sp_st[left_p] + sp_sl[left_p] * (x_t - x[left_p])
+
     #output is the value of f at any x
     return y
 
