@@ -33,6 +33,8 @@ def q_disc(z): #discrete aerodynamic loading function over the span with input t
 # outputs q_x, the distribution of aerodynamic load along span in [kN/m], z_cp, location of center of pressure per cross section
     return q_x, z_cp
 
+
+
 #test
 #calculate the x and z coordinate mesh ===========================================================================
 
@@ -56,20 +58,20 @@ for i in range(N_x + 1 + 1):
 
 # #plotting for graphical representation ============================================================================
 #
-# xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
-#
-#
-# fig = plt.figure()
-# ax = fig.gca(projection='3d')
-#
-# ax.plot_surface(xcoordinates, zcoordinates, aerodata)
-# ax.set_xlabel('Spanwise axis [m]')
-# ax.set_ylabel('Chordwise axis [m]')
-# ax.set_zlabel('Aerodynamic loading [kN/m2]')
+xcoordinates,zcoordinates = np.meshgrid(xcoordinates,zcoordinates)
+
+
+fig = plt.figure()
+ax = fig.gca(projection='3d')
+
+ax.plot_surface(xcoordinates, zcoordinates, aerodata)
+ax.set_xlabel('Spanwise axis [m]')
+ax.set_ylabel('Chordwise axis [m]')
+ax.set_zlabel('Aerodynamic loading [kN/m2]')
 # plt.show()
 
 
-#interpolation and integration of aerodynamic loading =========================================================
+#=================================interpolation and integration of aerodynamic loading =========================================================
 
 q_x, z_cp = q_disc(zcoordinates)
 
@@ -105,5 +107,5 @@ plt.plot(x_list,z_cp_list)
 plt.title('z_cp(x)')
 plt.xlabel('Span [m]')
 plt.ylabel('Center of Pressure location on chord [m]')
-plt.show()
+# plt.show()
 

@@ -72,6 +72,7 @@ deflection_case3 = np.array(np.genfromtxt('Deflection3')) #jammed straight case
 
 nodes = np.array(nodes)
 
+#nodes with added deflection values (10x exagerated for graphical purpouse)
 x1 = nodes[:,0] + 10*deflection_case1[:,2]
 y1 = nodes[:,1] + 10*deflection_case1[:,3]
 z1 = nodes[:,2] + 10*deflection_case1[:,4]
@@ -83,6 +84,14 @@ z2 = nodes[:,2] + 10*deflection_case2[:,4]
 x3 = nodes[:,0] + 10*deflection_case3[:,2]
 y3 = nodes[:,1] + 10*deflection_case3[:,3]
 z3 = nodes[:,2] + 10*deflection_case3[:,4]
+
+#======================================Find the deflection and shear stress values==============================================================
+#maximum shear stress
+bending_shear_max = max(bending_ave[:,2])
+jambending_shear_max = max(jambendingskin_ave[:,2])
+jamstraightskin_shear_max = max(jamstraightskin_ave[:,2])
+print(bending_shear_max)
+
 
 #=======================================================Plotting==================================================================================
 fig = plt.figure()
@@ -101,5 +110,5 @@ ax.set_zlim3d(-1250,1250)
 ax.set_xlabel('Spanwise axis [mm]')
 ax.set_ylabel('Height axis [mm]')
 ax.set_zlabel('Chordwise axis [mm]')
-plt.show()
+# plt.show()
 
