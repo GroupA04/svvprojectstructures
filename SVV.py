@@ -92,13 +92,13 @@ intb3_x3 = interpolate(xcoordinates, intb3, 1.494)
 
 fv_intb = intb[-1]
 
-print(intb3_x1,intb3_x2,intb3_x3, fv_intb)
+
 
 #integral 4
 int4_x1 = interpolate(xcoordinates, int4, 0.125)
 int4_x2 = interpolate(xcoordinates, int4, 0.498)
 int4_x3 = interpolate(xcoordinates, int4, 1.494)
-print(int4_x1,int4_x2,int4_x3)
+
 
 
 plt.plot(xcoordinates, int1)

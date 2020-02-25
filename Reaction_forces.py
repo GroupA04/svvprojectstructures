@@ -1,9 +1,5 @@
 #Reaction forces
-from SVV import int1,int2,int3,int4,intb3
-from math import *
-import numpy as np
-from scipy.sparse import linalg
-import matplotlib.pyplot as plt
+from SVV import *
 
 def macaulay(x, step):
     if (x - step) >= 0:
@@ -32,10 +28,10 @@ I_zz = 4.721698865*10**-6
 I_yy = 4.175337875*10**-5 
 E = 73.1*(10**6)
 
-integral_1_la = 6.19 
-integral_2_la = 5.01 
-integral_3_la = 2.538
-integral_4_la = 0.96
+integral_1_la = fv_1
+integral_2_la = fv_2
+integral_3_la = fv_3
+integral_4_la = fv_4
 integral_4_x1 = 1.4189e-05 
 integral_4_x2 = 0.0059978 
 integral_4_x3 = 0.7018
