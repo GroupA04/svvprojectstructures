@@ -3,6 +3,7 @@ import pandas as pd
 from numerical_functions import *
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+import matplotlib2tikz as tikz
 
 
 #=========================================Import node and element data==========================================================================
@@ -25,7 +26,7 @@ a = [np.array(nodes.loc[elements.loc[nr, node_defs]]) for nr in elements.index]
 
 # Verify if shape is (6634,4,3)
 if np.array(a).shape == (6634,4,3):
-    print('Shape is correct')
+    print('Node shape Pass')
 else:
     print('Shape is incorrect')
     print('Shape is', np.array(a).shape, 'Shape should be (6634,4,3)')
@@ -87,10 +88,10 @@ z3 = nodes[:,2] + 10*deflection_case3[:,4]
 
 #======================================Find the deflection and shear stress values==============================================================
 #---------Maximum shear stress
-bending_shear_max = max(bending_ave[:,2])
-jambending_shear_max = max(jambendingskin_ave[:,2])
-jamstraightskin_shear_max = max(jamstraightskin_ave[:,2])
-
+bending_shear_max = [max(bending_ave[:,2]), np.argmax(bending_ave[:,2])]
+jambending_shear_max = [max(jambendingskin_ave[:,2]), np.argmax(jambendingskin_ave[:,2])]
+jamstraightskin_shear_max = [max(jamstraightskin_ave[:,2]), np.argmax(jamstraightskin_ave[:,2])]
+print(bending_shear_max, jambending_shear_max, jamstraightskin_shear_max)
 #---------Deflection at hinge line
 #hinge line on y = 0, z = 0 along the span/x-axis
 hinge_nodes_index = np.where((nodes[:,1] == 0) & (nodes[:,2] == 0))
@@ -124,11 +125,11 @@ hinge_def3_max = [hinge_def3[np.argmax(abs(hinge_def3[:,0])),0], hinge_def3[np.a
 
 #=========================================================Plotting==================================================================================
 fig = plt.figure()
-# ax = fig.gca(projection='3d')
+ax = fig.gca(projection='3d')
 
 #------------------------------------Select which data to plot-------------------------------------------------------
 
-#vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,1], cmap = 'coolwarm')
+vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jamstraightskin_ave[:,1], cmap = 'coolwarm')
 #shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
 # deflection = ax.scatter(x2, y2, z2, c = deflection_case2[:,1], cmap = 'coolwarm')
 
@@ -140,20 +141,23 @@ fig = plt.figure()
 # hingedef3 = ax.scatter(hinge_def3[:,0], hinge_def3[:,1], hinge_def3[:,2])
 
 #2D plotting of deflection
-hingedef1_2d = plt.scatter(hinge_def1[:,0], hinge_def1[:,2])
-hingedef2_2d = plt.scatter(hinge_def2[:,0], hinge_def2[:,2])
-hingedef3_2d = plt.scatter(hinge_def3[:,0], hinge_def3[:,2])
+# hingedef1_2d = plt.scatter(hinge_def1[:,0], hinge_def1[:,1])
+# hingedef2_2d = plt.scatter(hinge_def2[:,0], hinge_def2[:,1])
+# hingedef3_2d = plt.scatter(hinge_def3[:,0], hinge_def3[:,1])
 
 #------------------------------------------------------------------------------------------------------------------
 
-# fig.colorbar(deflection)
-#
-# ax.set_xlim3d(0,2500)
-# ax.set_ylim3d(-1250,1250)
-# ax.set_zlim3d(-1250,1250)
-#
-# ax.set_xlabel('Spanwise axis [mm]')
-# ax.set_ylabel('Height axis [mm]')
-# ax.set_zlabel('Chordwise axis [mm]')
+colour = fig.colorbar(vonMises)
+
+
+ax.set_xlim3d(0,2500)
+ax.set_ylim3d(-1250,1250)
+ax.set_zlim3d(-1250,1250)
+
+ax.set_xlabel('Spanwise axis [mm]')
+ax.set_ylabel('Height axis [mm]')
+ax.set_zlabel('Chordwise axis [mm]')
+
+# tikz.save('vonmises_case3.tex')
 
 plt.show()

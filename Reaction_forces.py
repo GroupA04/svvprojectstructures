@@ -1,6 +1,7 @@
 #Reaction forces
 from SVV import *
 
+
 def macaulay(x, step):
     if (x - step) >= 0:
         return (x - step)
