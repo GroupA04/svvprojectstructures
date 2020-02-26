@@ -61,3 +61,33 @@ def average(case):
         ave2 = (case[:,4] + case[:,5])/2
         case_ave = np.vstack([case[:,0],ave1,ave2])
     return case_ave
+
+
+#=================================================Verification===================================================================================
+#Test for Spline(x,f) function:
+#Case1: input is a single line from (0,0) to (1,1)
+# output should be starting point 0 and slope 1
+x1 = [0,1]
+f1 = [0,1]
+sp_st1, sp_sl1 = spline(x1,f1)
+
+if sp_st1 == 0 and sp_sl1 == 1:
+    print('Spline case 1 Pass')
+else:
+    print('Spline case 1 Fail')
+
+#Case 2: inputs are 2 lines from (1,2) to (2,4) to (4,10)
+#output should give starting points [2,4] and slopes [2,3]
+x2 = [1,2,4]
+f2 = [2,4,10]
+sp_st2, sp_sl2 = spline(x2, f2)
+
+if (sp_st2[0] == 2) and (sp_st2[1] == 4) and (sp_sl2[0] == 2) and (sp_sl2[1] == 3):
+    print('Spline case 2 Pass')
+else:
+    print('Spline case 2 Fail')
+
+#Case 3: invalid 0 input
+x3 = [0,0,0]
+f3 = [1,1,1]
+

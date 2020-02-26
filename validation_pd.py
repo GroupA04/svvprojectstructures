@@ -16,8 +16,8 @@ elements = pd.read_csv('Elements', delimiter=',',
                        index_col = 0)
 
 # Check dataframes
-print(nodes.head())
-print(elements.head())
+# print(nodes.head())
+# print(elements.head())
 
 # Couple node and element data
 node_defs = ['node1','node2','node3','node4']
@@ -32,7 +32,7 @@ else:
 
 
 # Access element number 5
-print(a[4])
+# print(a[4])
 
 #take average posistion of nodes to get elements as point location
 elements_ave = []
@@ -124,32 +124,36 @@ hinge_def3_max = [hinge_def3[np.argmax(abs(hinge_def3[:,0])),0], hinge_def3[np.a
 
 #=========================================================Plotting==================================================================================
 fig = plt.figure()
-ax = fig.gca(projection='3d')
+# ax = fig.gca(projection='3d')
 
 #------------------------------------Select which data to plot-------------------------------------------------------
 
 #vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,1], cmap = 'coolwarm')
-shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
-#deflection = ax.scatter(x2, y2, z2, c = deflection_case2[:,1], cmap = 'coolwarm')
+#shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
+# deflection = ax.scatter(x2, y2, z2, c = deflection_case2[:,1], cmap = 'coolwarm')
 
 #-------------------------------------------------------------------------------------------------------------------
-
+#3D plotting of deflection
 # hingeline = ax.scatter(hinge_line[:,0], hinge_line[:,1], hinge_line[:,2])
 # hingedef1 = ax.scatter(hinge_def1[:,0], hinge_def1[:,1], hinge_def1[:,2])
-hingedef2 = ax.scatter(hinge_def2[:,0], hinge_def2[:,1], hinge_def2[:,2])
+# hingedef2 = ax.scatter(hinge_def2[:,0], hinge_def2[:,1], hinge_def2[:,2])
 # hingedef3 = ax.scatter(hinge_def3[:,0], hinge_def3[:,1], hinge_def3[:,2])
+
+#2D plotting of deflection
+hingedef1_2d = plt.scatter(hinge_def1[:,0], hinge_def1[:,2])
+hingedef2_2d = plt.scatter(hinge_def2[:,0], hinge_def2[:,2])
+hingedef3_2d = plt.scatter(hinge_def3[:,0], hinge_def3[:,2])
 
 #------------------------------------------------------------------------------------------------------------------
 
-fig.colorbar(shear)
-
-ax.set_xlim3d(0,2500)
-ax.set_ylim3d(-1250,1250)
-ax.set_zlim3d(-1250,1250)
-
-ax.set_xlabel('Spanwise axis [mm]')
-ax.set_ylabel('Height axis [mm]')
-ax.set_zlabel('Chordwise axis [mm]')
-
+# fig.colorbar(deflection)
+#
+# ax.set_xlim3d(0,2500)
+# ax.set_ylim3d(-1250,1250)
+# ax.set_zlim3d(-1250,1250)
+#
+# ax.set_xlabel('Spanwise axis [mm]')
+# ax.set_ylabel('Height axis [mm]')
+# ax.set_zlabel('Chordwise axis [mm]')
 
 plt.show()
