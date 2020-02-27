@@ -5,7 +5,7 @@ from numerical_functions import *
 
 #variables
 
-
+#test
 N_z = 81 #sections z axis (rows)
 N_x = 41 #sections x axis (columns)
 C_a = 0.505 #chord length aileron in [m]
