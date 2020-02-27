@@ -5,7 +5,7 @@ from numerical_functions import *
 
 #variables
 
-#test
+
 N_z = 81 #sections z axis (rows)
 N_x = 41 #sections x axis (columns)
 C_a = 0.505 #chord length aileron in [m]
@@ -14,6 +14,8 @@ l_a = 1.611 #span aileron in [m]
 #start code =============================================================================================================
 #import data
 aerodata = np.genfromtxt('aerodynamicloadf100.dat', delimiter=',')  #aerodynamic loading data given
+#System test using ones matrix of size 81,41
+#aerodata = np.ones((81,41))
 
 def q_disc(z): #discrete aerodynamic loading function over the span with input the discrete aerodynamic loading over the chord
     q_x = np.array([])
@@ -109,3 +111,8 @@ plt.xlabel('Span [m]')
 plt.ylabel('Center of Pressure location on chord [m]')
 # plt.show()
 
+#Getting 11 forces for Von Mises stress
+F = []
+for i in range(1,12):
+    s, s_acum, s_out  = integration(xcoordinates, (i-1)/11*l_a, i/11*l_a, q_x, 11)
+    F = np.append(F, s_out)

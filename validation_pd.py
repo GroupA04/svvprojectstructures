@@ -4,6 +4,7 @@ from numerical_functions import *
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib2tikz as tikz
+from Reaction_forces import xlist, deflection_vlist
 
 
 #=========================================Import node and element data==========================================================================
@@ -125,13 +126,13 @@ hinge_def3_max = [hinge_def3[np.argmax(abs(hinge_def3[:,0])),0], hinge_def3[np.a
 
 #=========================================================Plotting==================================================================================
 fig = plt.figure()
-ax = fig.gca(projection='3d')
+# ax = fig.gca(projection='3d')
 
 #------------------------------------Select which data to plot-------------------------------------------------------
 
-vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jamstraightskin_ave[:,1], cmap = 'coolwarm')
-#shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
-# deflection = ax.scatter(x2, y2, z2, c = deflection_case2[:,1], cmap = 'coolwarm')
+#vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,1], cmap = 'coolwarm')
+# shear = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c = jambendingskin_ave[:,2], cmap = 'coolwarm')
+#deflection = ax.scatter(x2, y2, z2, c = deflection_case2[:,1], cmap = 'coolwarm')
 
 #-------------------------------------------------------------------------------------------------------------------
 #3D plotting of deflection
@@ -141,22 +142,39 @@ vonMises = ax.scatter(elements_ave[:,0], elements_ave[:,1], elements_ave[:,2], c
 # hingedef3 = ax.scatter(hinge_def3[:,0], hinge_def3[:,1], hinge_def3[:,2])
 
 #2D plotting of deflection
-# hingedef1_2d = plt.scatter(hinge_def1[:,0], hinge_def1[:,1])
-# hingedef2_2d = plt.scatter(hinge_def2[:,0], hinge_def2[:,1])
-# hingedef3_2d = plt.scatter(hinge_def3[:,0], hinge_def3[:,1])
+hingedef1_2d = plt.scatter(hinge_def1[:,0]/2661, hinge_def1[:,1], marker='.', label = 'Case 1')
+# hingedef2_2d = plt.scatter(hinge_def2[:,0]/2661, hinge_def2[:,1], marker='.', label = 'Case 3')
+# hingedef3_2d = plt.scatter(hinge_def3[:,0]/2661, hinge_def3[:,1], marker='.', label = 'Case 3')
 
 #------------------------------------------------------------------------------------------------------------------
+#=========================================Import data from numerical model===========================================================================
+xlist = [i*1000/1611 for i in xlist]
+deflection_vlist = [i*1000 for i in deflection_vlist]
+print(deflection_vlist)
+hingedef1_num = plt.scatter(xlist, deflection_vlist, marker='.')
 
-colour = fig.colorbar(vonMises)
+#For 2D graphs---------------------------------------
+plt.title('Downwards deflection case 1 ')
+plt.xlabel('Normalized spanwise axis [-]')
+plt.ylabel('Deflection [mm]')
+plt.legend()
 
 
-ax.set_xlim3d(0,2500)
-ax.set_ylim3d(-1250,1250)
-ax.set_zlim3d(-1250,1250)
 
-ax.set_xlabel('Spanwise axis [mm]')
-ax.set_ylabel('Height axis [mm]')
-ax.set_zlabel('Chordwise axis [mm]')
+#For 3D graphs---------------------------------------
+# colour = fig.colorbar(shear, pad = 0.1)
+# colour.set_label('Shear Stress [GPa]')
+#
+# ax.set_xlim3d(0,2500)
+# ax.set_ylim3d(-1250,1250)
+# ax.set_zlim3d(-1250,1250)
+#
+# ax.set_xlabel('Spanwise axis [mm]')
+# ax.set_ylabel('Height axis [mm]')
+# ax.set_zlabel('Chordwise axis [mm]')
+#----------------------------------------------------
+
+
 
 # tikz.save('vonmises_case3.tex')
 
