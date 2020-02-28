@@ -111,8 +111,4 @@ plt.xlabel('Span [m]')
 plt.ylabel('Center of Pressure location on chord [m]')
 # plt.show()
 
-#Getting 11 forces for Von Mises stress
-F = []
-for i in range(1,12):
-    s, s_acum, s_out  = integration(xcoordinates, (i-1)/11*l_a, i/11*l_a, q_x, 11)
-    F = np.append(F, s_out)
+print(q_list)
